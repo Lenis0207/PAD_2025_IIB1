@@ -79,6 +79,12 @@ class ProcesadorDatos:
 
         if not lineas or not lineas[0].startswith("i,b,c"):
             raise ValueError("El archivo no tiene el encabezado esperado 'i,b,c'")
+        xs, ys, etiquetas = [], [], []
+        for linea in lineas[1:]:  # saltamos cabecera
+            i, b, c = linea.split(",")
+            xs.append(float(b))
+            ys.append(float(c))
+            etiquetas.append(i)
         return "ok"
 
 
