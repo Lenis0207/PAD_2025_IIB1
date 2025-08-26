@@ -26,9 +26,9 @@ class ProcesadorDatos:
         self.cc_dos = None
 
         # Categorías para el paso 3
-        self.categorias = ["anciano","anciana","mujer","hombre","niño","niña"]
+        self.categorias = ["preescolar","primaria","bachillerato","pregrado","posgrado","doctorado"]
 
-    # 1) Leer archivo de entrada
+   # 1) Leer archivo de entrada
     def leer_datos_entrada(self):
         if not os.path.exists(self.ruta_in):
             raise FileNotFoundError("No se encontró el archivo: " + self.ruta_in)
@@ -59,9 +59,8 @@ class ProcesadorDatos:
 
         rng_b = random.Random(self.cc_uno)
         rng_c = random.Random(self.cc_dos)
-        with open("datos_out.txt", "w") as f:
+        with open(self.ruta_out, "w", encoding="utf-8") as f:
             f.write("i,b,c\n")  # cabecera
-        
             for i in range(1, self.n + 1):
                 b = rng_b.uniform(-5, 5)  # ejemplo: números aleatorios entre -5 y 5
                 c = rng_c.uniform(2, 4)   # ejemplo: números aleatorios entre 2 y 4
@@ -73,18 +72,30 @@ class ProcesadorDatos:
         if not os.path.exists(self.ruta_out):
             raise FileNotFoundError("No se encontró el archivo: " + self.ruta_out)
 
-        # Leemos manualmente el CSV
         with open(self.ruta_out, "r", encoding="utf-8") as f:
             lineas = f.read().strip().splitlines()
 
         if not lineas or not lineas[0].startswith("i,b,c"):
             raise ValueError("El archivo no tiene el encabezado esperado 'i,b,c'")
-        xs, ys, etiquetas = [], [], []
+
+        # Parseamos datos y agregamos etiquetas aleatorias
+        conteo = {cat: 0 for cat in self.categorias}
+        rng = random.Random()  # semilla aleatoria distinta cada vez
         for linea in lineas[1:]:  # saltamos cabecera
             i, b, c = linea.split(",")
-            xs.append(float(b))
-            ys.append(float(c))
-            etiquetas.append(i)
+            etiqueta = rng.choice(self.categorias)
+            conteo[etiqueta] += 1
+
+        # Gráfico de barras
+        plt.figure(figsize=(6, 4))
+        plt.bar(conteo.keys(), conteo.values(), color="skyblue", edgecolor="black")
+        plt.xlabel("Etiqueta")
+        plt.ylabel("Frecuencia")
+        plt.title("Distribución de etiquetas aleatorias")
+
+        plt.savefig(self.ruta_img, dpi=150, bbox_inches="tight")
+        plt.close()
+
         return "ok"
 
 
