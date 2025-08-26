@@ -31,7 +31,7 @@ class ProcesadorDatos:
    # 1) Leer archivo de entrada
     def leer_datos_entrada(self):
         if not os.path.exists(self.ruta_in):
-            raise FileNotFoundError("No se encontró el archivo: " + self.ruta_in)
+            raise FileNotFoundError("No se encontro el archivo: " + self.ruta_in)
 
         with open(self.ruta_in, "r", encoding="utf-8") as f:
             contenido = f.read().strip()
@@ -70,7 +70,7 @@ class ProcesadorDatos:
     # 3) Leer datos_out, agregar etiqueta y graficar
     def leer_y_graficar(self):
         if not os.path.exists(self.ruta_out):
-            raise FileNotFoundError("No se encontró el archivo: " + self.ruta_out)
+            raise FileNotFoundError("No se encontro el archivo: " + self.ruta_out)
 
         with open(self.ruta_out, "r", encoding="utf-8") as f:
             lineas = f.read().strip().splitlines()
