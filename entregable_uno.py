@@ -62,10 +62,10 @@ class ProcesadorDatos:
         with open("datos_out.txt", "w") as f:
             f.write("i,b,c\n")  # cabecera
         
-        for i in range(1, self.n + 1):
-            b = rng_b.uniform(-5, 5)  # ejemplo: números aleatorios entre -5 y 5
-            c = rng_c.uniform(2, 4)   # ejemplo: números aleatorios entre 2 y 4
-            f.write(f"{i},{b:.6f},{c:.6f}\n")
+            for i in range(1, self.n + 1):
+                b = rng_b.uniform(-5, 5)  # ejemplo: números aleatorios entre -5 y 5
+                c = rng_c.uniform(2, 4)   # ejemplo: números aleatorios entre 2 y 4
+                f.write(f"{i},{b:.6f},{c:.6f}\n")
         return "ok"
 
     # 3) Leer datos_out, agregar etiqueta y graficar
